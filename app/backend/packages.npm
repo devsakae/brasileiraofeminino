@@ -1,3 +1,5 @@
 joi
 boom
 express-async-errors
+@types/jest
+@types/mocha
