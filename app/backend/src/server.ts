@@ -1,6 +1,7 @@
-import { App } from './app';
 import 'dotenv/config';
+import { App } from './app';
 
 const PORT = process.env.APP_PORT || 3001;
 
 new App().start(PORT);
+console.log('Servidor rodando na porta', PORT)
