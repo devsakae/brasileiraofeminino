@@ -1,27 +1,28 @@
-import Pool = require('mysql2/typings/mysql/lib/Pool');
-import { Model } from 'sequelize';
-// import OtherModel from './OtherModel';
+import { INTEGER, Model, STRING } from 'sequelize';
+import db from '.';
 
-class Teams extends Model {
-  public connection: Pool;
-
-  constructor(connection: Pool) {
-    super();
-    this.connection = connection;
-  }
-
-  
+class TeamModel extends Model {
+  declare id: number;
+  declare teamName: string;
 }
 
-// Teams.init({
-//   // ... Campos
-// }, {
-//   // ... Outras configs
-//   underscored: true,
-//   sequelize: db,
-//   // modelName: 'example',
-//   timestamps: false,
-// });
+TeamModel.init({
+  id: {
+    type: INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  teamName: {
+    type: STRING,
+    allowNull: false,
+  },
+}, {
+  underscored: true,
+  sequelize: db,
+  modelName: 'teams',
+  timestamps: false,
+});
 
 /**
   * `Workaround` para aplicar as associations em TS:
@@ -34,4 +35,4 @@ class Teams extends Model {
 // Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
 // Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
 
-export default Teams;
+export default TeamModel;
