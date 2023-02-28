@@ -12,20 +12,20 @@ export default class UserController {
         return res.status(401).json({ message: 'Invalid email or password' });
       }
       res.status(response.code).json({ token: response.payload });
-    } catch (e: any) {
+    } catch (e: unknown) {
       const error = getError(e);
       res.status(error.code).json({ message: error.message });
     }
   };
 
-  public role = async (req: Request, res: Response) => {
+  public role = async (req: Request, res: Response): Promise<void> => {
     try {
       const { headers: { authorization } } = req;
       if (!authorization) throw new Error('Token not found');
       const role = await this.userService.role(authorization);
       res.status(200).json({ role });
-    } catch (e: any) {
-      res.status(401).json({ message: e.message });
+    } catch ({ message }) {
+      res.status(401).json({ message });
     }
   };
 }

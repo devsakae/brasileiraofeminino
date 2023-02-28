@@ -8,8 +8,8 @@ export default class TeamController {
     try {
       const teams = await this.teamService.getAll();
       res.status(200).json(teams);
-    } catch (err: any) {
-      res.status(500).json({ message: err.message });
+    } catch ({ message }) {
+      res.status(500).json({ message });
     }
   };
 
@@ -19,8 +19,8 @@ export default class TeamController {
       const response = await this.teamService.getOne(+id);
       if (response.code === 404) return res.status(404).json({ message: 'Team not found' });
       res.status(200).json(response);
-    } catch (err: any) {
-      res.status(500).json({ message: err.message });
+    } catch ({ message }) {
+      res.status(500).json({ message });
     }
   };
 }

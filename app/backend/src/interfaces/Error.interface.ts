@@ -1,4 +1,6 @@
-export default interface ErrorInterface {
+import { ValidationError } from 'sequelize';
+
+export default interface ErrorInterface extends ValidationError {
   code: number,
   details: {
     type: string,
