@@ -2,42 +2,46 @@ import * as chai from 'chai';
 import * as sinon from 'sinon';
 // @ts-ignore
 import chaiHttp = require('chai-http');
-
-import Teams from '../database/models/Team.model';
-
+// import { app } from '../app';
 import { Response } from 'superagent';
+import TeamModel from '../database/models/Team.model';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
-
-// type Team = {
-//   id: number,
-//   team_name: string;
-// }
 
 describe('Teste das migrations e model da Teams', () => {
   let chaiHttpResponse: Response;
 
   before(async () => {
     sinon
-      .stub(Teams, "findOne")
+      .stub(TeamModel, "findAll")
       .resolves(
-        // { }
-        // as Team
+        [
+          {
+            "id": 1,
+            "teamName": "Avaí/Kindermann"
+          },
+          {
+            "id": 2,
+            "teamName": "Bahia"
+          },
+          {
+            "id": 3,
+            "teamName": "Botafogo"
+          }
+        ] as TeamModel[]
       );
   });
 
   after(()=>{
-    (Teams.findOne as sinon.SinonStub).restore();
+    (TeamModel.findAll as sinon.SinonStub).restore();
   })
 
-  it('...', async () => {
+  it('Busca todos os times cadastrados', async () => {
     // chaiHttpResponse = await chai
     //    .request(app)
-    //    ...
-
-    // expect(...)
+    // expect()
   });
 
   it('Seu sub-teste', () => {
