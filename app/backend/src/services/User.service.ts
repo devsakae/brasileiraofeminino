@@ -1,7 +1,11 @@
-import { compare, genSaltSync, hashSync } from 'bcryptjs';
+import { compare } from 'bcryptjs';
+import { sign, verify } from 'jsonwebtoken';
 import UserModel from '../database/models/User.model.ts';
 import { INewUser } from '../interfaces/INewUser.interface';
+import { JwtUser } from '../interfaces/JwtUser.interface';
 import userFields from '../utils/userValidation';
+
+const secret = process.env.JWT_SECRET || 'jwtsecret';
 
 export default class UserService {
   protected userModel = UserModel;
@@ -13,8 +17,16 @@ export default class UserService {
     if (!user) return { code: 401 };
     const check = await compare(password, user.password).then((res) => res);
     if (!check) return { code: 401 };
-    const salt = genSaltSync(10);
-    const newHash = hashSync(user.username, salt);
-    return { code: 200, payload: newHash };
+    const token = sign({ data: { user } }, secret, {
+      expiresIn: '7d',
+      algorithm: 'HS256',
+    });
+    return { code: 200, payload: token };
+  }
+
+  public async role(userToken: string) {
+    const { data: { user } } = verify(userToken, secret) as JwtUser;
+    const refreshedUser = await this.userModel.findOne({ where: { username: user.role } });
+    return refreshedUser?.role;
   }
 }
