@@ -2,7 +2,6 @@ import ErrorInterface from '../interfaces/Error.interface';
 
 const getError = (err: ErrorInterface) => {
   const tipo = err.details[0].type;
-  console.log('TIPO:', tipo);
   if (tipo === 'any.required' || tipo === 'string.empty') {
     return { ...err.details[0], code: 400, message: 'All fields must be filled' };
   }
