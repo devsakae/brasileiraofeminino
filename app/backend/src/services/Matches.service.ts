@@ -6,7 +6,10 @@ export default class MatchesServices {
   protected teamModel = TeamModel;
 
   public async getAll() {
-    const matches = await this.matchesModel.findAll();
+    const matches = await this.matchesModel.findAll({
+      include: [{ model: TeamModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
+        { model: TeamModel, as: 'awayTeam', attributes: { exclude: ['id'] } }],
+    });
     return matches;
   }
 }

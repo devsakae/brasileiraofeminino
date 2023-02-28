@@ -2,13 +2,9 @@ type userRole = 'admin' | 'user';
 
 export interface JwtUser {
   data: {
-    user: {
-      id: number;
-      username: string;
-      role: userRole;
-      email: string;
-      password: string;
-    }
+    id: number;
+    role: userRole;
+    email: string;
   },
   iat: number,
   exp: number,
