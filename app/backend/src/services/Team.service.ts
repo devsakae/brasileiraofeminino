@@ -1,4 +1,4 @@
-import TeamModel from '../models/Team.model';
+import TeamModel from '../database/models/Team.model';
 
 export default class TeamService {
   protected teamModel = TeamModel;
