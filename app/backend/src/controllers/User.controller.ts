@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import UserService from '../services/User.service';
+import getError from '../utils/getError';
 
 export default class UserController {
   constructor(private userService = new UserService()) {}
@@ -7,9 +8,11 @@ export default class UserController {
   public login = async (req: Request, res: Response) => {
     try {
       const response = await this.userService.login(req.body);
-      res.status(201).json({ message: `Welcome, ${response}` });
-    } catch (err: any) {
-      res.status(400).json({ message: err.message });
+      if (response.code === 401) res.status(401).json({ message: 'Invalid email or password' });
+      res.status(response.code).json({ token: response.payload });
+    } catch (e: any) {
+      const error = getError(e);
+      res.status(error.code).json({ message: error.message });
     }
   };
 }
