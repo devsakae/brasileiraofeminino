@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import ErrorInterface from '../interfaces/Error.interface';
+import userFields from '../schemas/userSchema';
 import UserService from '../services/User.service';
 import getError from '../utils/getError';
 
@@ -8,6 +9,7 @@ export default class UserController {
 
   public login = async (req: Request, res: Response) => {
     try {
+      await userFields.validateAsync(req.body);
       const response = await this.userService.login(req.body);
       if (response.code === 401) {
         return res.status(401).json({ message: 'Invalid email or password' });

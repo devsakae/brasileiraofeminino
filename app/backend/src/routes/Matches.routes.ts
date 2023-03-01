@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import MatchesController from '../controllers/Matches.controller';
+import avoidSameTeams from '../middlewares/avoidSameTeams';
 import validateToken from '../middlewares/validateToken';
 
 const matchesRouter = Router();
@@ -13,5 +14,16 @@ matchesRouter.get('/', (req: Request, res: Response) => {
 matchesRouter.patch('/:id/finish', validateToken, (req: Request, res: Response) => {
   matchesController.finishMatch(req, res);
 });
+
+matchesRouter.patch('/:id', validateToken, (req: Request, res: Response) => {
+  matchesController.editMatch(req, res);
+});
+
+matchesRouter.post(
+  '/',
+  validateToken,
+  avoidSameTeams,
+  (req: Request, res: Response) => matchesController.newMatch(req, res),
+);
 
 export default matchesRouter;

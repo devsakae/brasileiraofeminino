@@ -1,6 +1,7 @@
 import MatchesModel from '../database/models/Matches.model';
 import TeamModel from '../database/models/Team.model';
 import { InProgress } from '../interfaces/InProgress.interface';
+import { NewMatch } from '../interfaces/NewMatch.interface';
 
 export default class MatchesServices {
   protected matchesModel = MatchesModel;
@@ -32,5 +33,25 @@ export default class MatchesServices {
     );
     if (matchStatus[0] === 0) return { code: 304, message: 'Match already finished' };
     return { code: 200, message: 'Finished' };
+  }
+
+  public async editMatch(id: number, htg: number, atg: number) {
+    const matchStatus = await this.matchesModel.update(
+      {
+        homeTeamGoals: htg,
+        awayTeamGoals: atg,
+      },
+      { where: { id } },
+    );
+    if (matchStatus[0] === 0) return { code: 304, message: 'Match not changed' };
+    return { code: 200, message: 'Match edited' };
+  }
+
+  public async newMatch(matchData: NewMatch) {
+    const matchUpdated = await this.matchesModel.create({
+      ...matchData,
+      inProgress: true,
+    });
+    return { code: 200, message: matchUpdated };
   }
 }
