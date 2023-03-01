@@ -1,26 +1,38 @@
 import { Request, Response } from 'express';
+import { InProgress } from '../interfaces/InProgress.interface';
 import MatchesService from '../services/Matches.service';
 
 export default class MatchesController {
   constructor(private matchesService = new MatchesService()) {}
 
-  public getAll = async (_req: Request, res: Response) => {
+  public async getAll(req: Request, res: Response) {
     try {
       const matches = await this.matchesService.getAll();
-      res.status(200).json(matches);
+      return res.status(200).json(matches);
     } catch ({ message }) {
-      res.status(500).json({ message });
+      return res.status(500).json({ message });
     }
-  };
+  }
 
-  // public getOne = async (req: Request, res: Response) => {
-  //   try {
-  //     const { id } = req.params;
-  //     const response = await this.teamService.getOne(+id);
-  //     if (response.code === 404) return res.status(404).json({ message: 'Team not found' });
-  //     res.status(200).json(response);
-  //   } catch (err: any) {
-  //     res.status(500).json({ message: err.message });
-  //   }
-  // };
+  public async getOnGoing(req: Request, res: Response) {
+    try {
+      const mode: InProgress = req.query;
+      const response = await this.matchesService.getOnGoing(mode);
+      return res.status(200).json(response);
+    } catch (e) {
+      const error = e as Error;
+      return res.status(500).json(error.message);
+    }
+  }
+
+  public async finishMatch(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { code, message } = await this.matchesService.finishMatch(+id);
+      return res.status(code).json({ message });
+    } catch (e) {
+      const error = e as Error;
+      return res.status(500).json(error.message);
+    }
+  }
 }
