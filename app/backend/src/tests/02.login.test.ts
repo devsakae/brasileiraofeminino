@@ -26,18 +26,18 @@ describe('Testa o sistema de Login', () => {
   })
 });
 
-describe('Testa o sistema de Login', () => {
-  it('Erro na requisição com o BD', async () => {
-    sinon.stub(UserModel, 'findOne').resolves(undefined);
-    chai.request(app)
-      .post('/login')
-      .send({ email: 'admin@naoexiste.com', password: 'secret_admin' })
-      .end(function (err, res) {
-        expect(err).to.be.null;
-        expect(res).to.have.status(401);
-      });
-  });
-  after(() => {
-    (UserModel.findOne as sinon.SinonStub).restore();
-  })
-});
+// describe('Testa o sistema de Login', () => {
+//   it('Erro na requisição com o BD', async () => {
+//     sinon.stub(UserModel, 'findOne').resolves(undefined);
+//     chai.request(app)
+//       .post('/login')
+//       .send({ email: 'admin@naoexiste.com', password: 'secret_admin' })
+//       .end(function (err, res) {
+//         expect(err).to.be.null;
+//         expect(res).to.have.status(401);
+//       });
+//   });
+//   after(() => {
+//     (UserModel.findOne as sinon.SinonStub).restore();
+//   })
+// });

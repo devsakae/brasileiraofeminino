@@ -9,8 +9,13 @@ export default class MatchesServices {
 
   public async getAll() {
     const matches = await this.matchesModel.findAll({
-      include: [{ model: TeamModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
-        { model: TeamModel, as: 'awayTeam', attributes: { exclude: ['id'] } }],
+      attributes: {
+        exclude: ['home_team_id', 'away_team_id'],
+      },
+      include: [
+        { model: TeamModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
+        { model: TeamModel, as: 'awayTeam', attributes: { exclude: ['id'] } },
+      ],
     });
     return matches;
   }
@@ -23,8 +28,10 @@ export default class MatchesServices {
         exclude: ['home_team_id', 'away_team_id'],
       },
       where: params,
-      include: [{ model: TeamModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
-        { model: TeamModel, as: 'awayTeam', attributes: { exclude: ['id'] } }],
+      include: [
+        { model: TeamModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
+        { model: TeamModel, as: 'awayTeam', attributes: { exclude: ['id'] } },
+      ],
     });
     return matches;
   }
@@ -55,6 +62,6 @@ export default class MatchesServices {
       ...matchData,
       inProgress: true,
     });
-    return { code: 200, message: matchUpdated };
+    return { code: 201, message: matchUpdated };
   }
 }

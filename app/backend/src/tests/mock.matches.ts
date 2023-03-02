@@ -1,11 +1,3 @@
-const oneUser = {
-  id: 1,
-  username: 'Admin',
-  email: 'admin@admin.com',
-  role: 'admin',
-  password: 'nothashedpassword',
-};
-
 const oneMatch = {
   id: 1,
   homeTeamId: 1,
@@ -15,4 +7,24 @@ const oneMatch = {
   inProgress: true
 };
 
-export { oneUser, oneMatch };
+const allMatches = [
+  {
+    id: 1,
+    homeTeamId: 1,
+    homeTeamGoals: 1,
+    awayTeamId: 2,
+    awayTeamGoals: 2,
+    inProgress: true,
+  },
+  {
+    id: 2,
+    homeTeamId: 1,
+    homeTeamGoals: 3,
+    awayTeamId: 3,
+    awayTeamGoals: 1,
+    inProgress: false,
+  },
+];
+
+export { oneMatch, allMatches };
+

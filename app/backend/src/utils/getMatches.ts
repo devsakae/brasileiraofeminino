@@ -1,22 +1,23 @@
-// import MatchesModel from '../database/models/Matches.model';
-import calculatePoints from './calculatePoints';
+import calculateScore from './calculateScore';
 
-export default function getMatches(data: any) {
+type Side = { home: boolean };
+
+export default function getMatches(side: Side, data: any) {
   return data.map((match: any) => {
-    const matchScore = calculatePoints(match.homeTeamGoals, match.awayTeamGoals);
+    let matchScore;
+    (side.home) ? matchScore = calculateScore(match.homeTeamGoals, match.awayTeamGoals)
+      : matchScore = calculateScore(match.awayTeamGoals, match.homeTeamGoals);
     return ({
       matchId: match.id,
-      teamId: match.homeTeamId,
-      team: match.homeTeam.teamName,
-      // Typescript não permitiu fazer isso, vou ter que fazer um getbyId depois de tudo
-      // team: match.hometeam.teamName,
-      matchPoints: matchScore.points,
-      victory: matchScore.v,
-      draw: matchScore.d,
-      loss: matchScore.l,
-      goalsFavor: match.homeTeamGoals,
-      goalsOwn: match.awayTeamGoals,
-      goalsBalance: match.homeTeamGoals - match.awayTeamGoals,
+      teamId: (side.home) ? match.homeTeamId : match.awayTeamId,
+      team: (side.home) ? match.homeTeam.teamName : match.awayTeam.teamName,
+      matchPoints: matchScore.point,
+      victory: matchScore.victory,
+      draw: matchScore.draw,
+      loss: matchScore.loss,
+      goalsFavor: (side.home) ? match.homeTeamGoals : match.awayTeamGoals,
+      goalsOwn: (side.home) ? match.awayTeamGoals : match.homeTeamGoals,
+      goalsBalance: (side.home) ? match.homeTeamGoals - match.awayTeamGoals : match.awayTeamGoals - match.homeTeamGoals,
     });
   });
 }

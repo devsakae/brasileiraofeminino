@@ -11,6 +11,13 @@ matchesRouter.get('/', (req: Request, res: Response) => {
   else matchesController.getAll(req, res);
 });
 
+matchesRouter.post(
+  '/',
+  validateToken,
+  avoidSameTeams,
+  (req: Request, res: Response) => matchesController.newMatch(req, res),
+);
+
 matchesRouter.patch('/:id/finish', validateToken, (req: Request, res: Response) => {
   matchesController.finishMatch(req, res);
 });
@@ -18,12 +25,5 @@ matchesRouter.patch('/:id/finish', validateToken, (req: Request, res: Response) 
 matchesRouter.patch('/:id', validateToken, (req: Request, res: Response) => {
   matchesController.editMatch(req, res);
 });
-
-matchesRouter.post(
-  '/',
-  validateToken,
-  avoidSameTeams,
-  (req: Request, res: Response) => matchesController.newMatch(req, res),
-);
 
 export default matchesRouter;

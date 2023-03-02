@@ -1,4 +1,4 @@
-export interface ICalculateResult {
+export default interface ICalculateResult {
   matchId: number;
   team: string;
   teamId: number;
