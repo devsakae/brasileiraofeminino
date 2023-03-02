@@ -1,7 +1,7 @@
 function createResponseItem(data: any) {
   return ({
     name: data.team,
-    totalPoints: data.tp,
+    totalPoints: data.mp,
     totalGames: data.m,
     totalVictories: data.v,
     totalDraws: data.d,
@@ -17,7 +17,7 @@ export default async function organize(data: any) {
   const response: any[] = [];
   data.forEach((m: any) => {
     if (!response.some((r) => r.name === m.team)) {
-      const efficiency = ((m.tp / (m.m * 3)) * 100).toFixed(2);
+      const efficiency = ((m.mp / (m.m * 3)) * 100).toFixed(2);
       const responseItem = createResponseItem({ ...m, efficiency });
       response.push(responseItem);
     }

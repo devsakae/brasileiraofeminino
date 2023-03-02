@@ -10,11 +10,10 @@ export default class {
 
   public async getComplete() {
     const data = await this.matchService.getOnGoing({ inProgress: 'false' });
-    const result: ICalculateResult[] = getCompleteMatches(data);
-    // parada
-    // const scoring = calculateMatches(matches);
+    const matches: ICalculateResult[] = getCompleteMatches(data);
+    const scoring = calculateMatches(matches);
     // const result = organize(scoring);
-    return result;
+    return scoring;
   }
 
   public async getHome() {
