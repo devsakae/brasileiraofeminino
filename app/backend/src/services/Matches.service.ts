@@ -19,6 +19,9 @@ export default class MatchesServices {
     let params = ({ inProgress: false });
     if (mode.inProgress === 'true') params = ({ inProgress: true });
     const matches = await this.matchesModel.findAll({
+      attributes: {
+        exclude: ['home_team_id', 'away_team_id'],
+      },
       where: params,
       include: [{ model: TeamModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
         { model: TeamModel, as: 'awayTeam', attributes: { exclude: ['id'] } }],

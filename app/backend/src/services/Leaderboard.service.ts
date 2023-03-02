@@ -1,10 +1,17 @@
-import MatchesModel from '../database/models/Matches.model';
+import { ICalculateResult } from '../interfaces/ICalculateResult';
+import calculateMatches from '../utils/calculateMatches';
+import getMatches from '../utils/getMatches';
+import organize from '../utils/organizeScoring';
+import MatchesServices from './Matches.service';
 
 export default class {
-  protected matchesModel = MatchesModel;
+  constructor(private matchService = new MatchesServices()) {}
 
-  public async getAll() {
-    const res = await this.matchesModel.findAll();
-    return res;
+  public async getHome() {
+    const res = await this.matchService.getOnGoing({ inProgress: 'false' });
+    const matches: ICalculateResult[] = getMatches(res);
+    const scoring = calculateMatches(matches);
+    const result = organize(scoring);
+    return result;
   }
 }
