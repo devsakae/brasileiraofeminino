@@ -1,4 +1,7 @@
-function createResponseItem(data: any) {
+import ILeaderboard from '../interfaces/ILeaderboard';
+import { objTemp } from '../interfaces/ObjTemp.interface';
+
+function createResponseItem(data: objTemp): ILeaderboard {
   return ({
     name: data.team,
     totalPoints: data.mp,
@@ -13,13 +16,12 @@ function createResponseItem(data: any) {
   });
 }
 
-export default async function organize(data: any) {
-  const response: any[] = [];
-  data.forEach((m: any) => {
+export default async function organize(data: objTemp[]) {
+  const response: ILeaderboard[] = [];
+  data.forEach((m: objTemp) => {
     if (!response.some((r) => r.name === m.team)) {
       const efficiency = ((m.mp / (m.m * 3)) * 100).toFixed(2);
-      const responseItem = createResponseItem({ ...m, efficiency });
-      response.push(responseItem);
+      response.push(createResponseItem({ ...m, efficiency }));
     }
   });
   response.sort((a, b) => a.goalsOwn + b.goalsOwn)

@@ -20,7 +20,7 @@ export default class MatchesServices {
     return matches;
   }
 
-  public async getOnGoing(mode: InProgress) {
+  public async getOnGoing(mode: InProgress): Promise<MatchesModel[]> {
     let params = ({ inProgress: false });
     if (mode.inProgress === 'true') params = ({ inProgress: true });
     const matches = await this.matchesModel.findAll({

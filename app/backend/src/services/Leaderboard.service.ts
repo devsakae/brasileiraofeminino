@@ -1,6 +1,7 @@
 import ICalculateResult from '../interfaces/ICalculateResult';
+import IMatchResult from '../interfaces/IMatchResult';
 import calculateMatches from '../utils/calculateMatches';
-import getCompleteMatches from '../utils/getCompleteMatches';
+// import getCompleteMatches from '../utils/getCompleteMatches';
 import getMatches from '../utils/getMatches';
 import organize from '../utils/organizeScoring';
 import MatchesServices from './Matches.service';
@@ -8,26 +9,26 @@ import MatchesServices from './Matches.service';
 export default class {
   constructor(private matchService = new MatchesServices()) {}
 
-  public async getComplete() {
-    const data = await this.matchService.getOnGoing({ inProgress: 'false' });
-    const matches: ICalculateResult[] = getCompleteMatches(data);
-    const scoring = calculateMatches(matches);
-    // const result = organize(scoring);
-    return scoring;
-  }
+  // public async getComplete() {
+  //   const data = await this.matchService.getOnGoing({ inProgress: 'false' });
+  //   const matches: ICalculateResult[] = getCompleteMatches(data);
+  //   const scoring = calculateMatches(matches);
+  //   const result = organize(scoring);
+  //   return data;
+  // }
 
   public async getHome() {
     const data = await this.matchService.getOnGoing({ inProgress: 'false' });
-    const matches: ICalculateResult[] = getMatches({ home: true }, data);
-    const scoring = calculateMatches(matches);
+    const matches = getMatches({ home: true }, data as IMatchResult[]);
+    const scoring = calculateMatches(matches as ICalculateResult[]);
     const result = organize(scoring);
     return result;
   }
 
   public async getAway() {
     const data = await this.matchService.getOnGoing({ inProgress: 'false' });
-    const matches: ICalculateResult[] = getMatches({ home: false }, data);
-    const scoring = calculateMatches(matches);
+    const matches = getMatches({ home: false }, data as IMatchResult[]);
+    const scoring = calculateMatches(matches as ICalculateResult[]);
     const result = organize(scoring);
     return result;
   }

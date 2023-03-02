@@ -1,11 +1,12 @@
 import ICalculateResult from '../interfaces/ICalculateResult';
+import { objTemp } from '../interfaces/ObjTemp.interface';
 
 export default function calculateMatches(data: ICalculateResult[]) {
-  const result: any[] = [];
+  const result: objTemp[] = [];
   data.forEach((match) => {
-    const objTemp = { team: '', mp: 0, m: 0, v: 0, d: 0, l: 0, gp: 0, go: 0, gb: 0 };
+    const obj: objTemp = { team: '', mp: 0, m: 0, v: 0, d: 0, l: 0, gp: 0, go: 0, gb: 0 };
     result.push(data.filter((item) => item.team === match.team)
-      .reduce((acc: any, curr) => {
+      .reduce((acc, curr) => {
         acc.team = curr.team;
         acc.mp += curr.matchPoints;
         acc.m += 1;
@@ -16,7 +17,7 @@ export default function calculateMatches(data: ICalculateResult[]) {
         acc.go += curr.goalsOwn;
         acc.gb += curr.goalsBalance;
         return acc;
-      }, objTemp));
+      }, obj));
   });
   return result;
 }
