@@ -7,8 +7,8 @@ const matchesRouter = Router();
 const matchesController = new MatchesController();
 
 matchesRouter.get('/', (req: Request, res: Response) => {
-  if (req.query.inProgress) matchesController.getOnGoing(req, res);
-  else matchesController.getAll(req, res);
+  if (req.query.inProgress) return matchesController.getOnGoing(req, res);
+  return matchesController.getAll(req, res);
 });
 
 matchesRouter.post(
