@@ -16,6 +16,14 @@ function createResponseItem(data: objTemp): ILeaderboard {
   });
 }
 
+function criteriosDeDesempate(array: ILeaderboard[]) {
+  return array.sort((a, b) => a.goalsOwn + b.goalsOwn)
+    .sort((a, b) => b.goalsFavor - a.goalsFavor)
+    .sort((a, b) => b.goalsBalance - a.goalsBalance)
+    .sort((a, b) => b.totalVictories - a.totalVictories)
+    .sort((a, b) => b.totalPoints - a.totalPoints);
+}
+
 export default async function organize(data: objTemp[]) {
   const response: ILeaderboard[] = [];
   data.forEach((m: objTemp) => {
@@ -24,10 +32,5 @@ export default async function organize(data: objTemp[]) {
       response.push(createResponseItem({ ...m, efficiency }));
     }
   });
-  response.sort((a, b) => a.goalsOwn + b.goalsOwn)
-    .sort((a, b) => b.goalsFavor - a.goalsFavor)
-    .sort((a, b) => b.goalsBalance - a.goalsBalance)
-    .sort((a, b) => b.totalVictories - a.totalVictories)
-    .sort((a, b) => b.totalPoints - a.totalPoints);
-  return response;
+  return criteriosDeDesempate(response);
 }

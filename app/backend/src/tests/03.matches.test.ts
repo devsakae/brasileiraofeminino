@@ -31,7 +31,7 @@ describe('Testa o funcionamento do fluxo Matches', () => {
   })
   it('Solicita todas as partidas', async () => {
     sinon.stub(MatchesModel, 'findAll').resolves(mock.allMatches as MatchesModel[]);
-    const result = await chai.request(app).get('/matches')
+    const result = await chai.request(app).get('/matches');
     expect(result.status).to.be.equal(200);
     expect(result.body).to.be.deep.equal(mock.matchesInProgress);
   });
