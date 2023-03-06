@@ -13,7 +13,6 @@ export default class {
     const data = await this.matchService.getOnGoing({ inProgress: 'false' });
     const matches = getCompleteMatches(data);
     const scoring = calculateMatches(matches);
-    console.log('CALCULATE:', scoring);
     const result = organize(scoring);
     return result;
   }
