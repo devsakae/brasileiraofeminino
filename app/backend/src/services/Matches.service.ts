@@ -41,7 +41,7 @@ export default class MatchesServices {
       { inProgress: false },
       { where: { id } },
     );
-    if (matchStatus[0] === 0) return { code: 304, message: 'Match already finished' };
+    if (matchStatus[0] === 0) throw new Error('Match already finished');
     return { code: 200, message: 'Finished' };
   }
 

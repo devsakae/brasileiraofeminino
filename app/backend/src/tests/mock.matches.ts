@@ -48,5 +48,18 @@ const matchesFinished = [
   },
 ];
 
-export { oneMatch, allMatches, matchesInProgress, matchesFinished };
+const newMatch = {
+  homeTeamId: 5,
+  awayTeamId: 1,
+  homeTeamGoals: 1,
+  awayTeamGoals: 0
+}
+
+const newMatchServiceResponse = {
+  id: 20,
+  ...newMatch,
+  inProgress: true,
+}
+
+export { oneMatch, allMatches, matchesInProgress, matchesFinished, newMatch, newMatchServiceResponse };
 

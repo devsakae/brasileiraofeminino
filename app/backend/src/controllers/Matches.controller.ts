@@ -38,7 +38,8 @@ export default class MatchesController {
       return res.status(code).json({ message });
     } catch (e) {
       const error = e as Error;
-      return res.status(500).json(error.message);
+      console.log('MEU ERRO FOI CRER:', error);
+      return res.status(500).json({ message: error.message });
     }
   }
 
@@ -51,7 +52,7 @@ export default class MatchesController {
       return res.status(code).json({ message });
     } catch (e) {
       const error = e as Error;
-      return res.status(500).json(error.message);
+      return res.status(500).json({ message: error.message });
     }
   }
 
@@ -67,7 +68,7 @@ export default class MatchesController {
       return res.status(code).json(message);
     } catch (e) {
       const error = e as Error;
-      return res.status(500).json(error.message);
+      return res.status(500).json({ message: error.message });
     }
   }
 }
