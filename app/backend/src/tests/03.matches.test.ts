@@ -3,6 +3,7 @@ import * as sinon from 'sinon';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
+import { sign } from 'jsonwebtoken';
 import { app } from '../app';
 import MatchesModel from '../database/models/Matches.model';
 import IMatchResult from '../interfaces/IMatchResult';
@@ -14,6 +15,17 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+const VALIDTOKEN = sign({
+  data: {
+    id: 1,
+    email: 'admin@admin.com',
+    role: 'admin',
+  }
+}, 'jwt_secret', {
+  expiresIn: '7d',
+  algorithm: 'HS256',
+});
+
 describe('Testa a camada service do fluxo Matches', () => {
   afterEach(() => {
     (matchService.getAll as sinon.SinonStub).restore();
@@ -22,6 +34,23 @@ describe('Testa a camada service do fluxo Matches', () => {
     sinon.stub(matchService, 'getAll').resolves(mock.allMatches as IMatchResult[]);
     const result = await chai.request(app).get('/matches');
     expect(result).to.have.status(200);
+  });
+});
+
+describe('Testa o método PATCH', () => {
+  afterEach(() => {
+    (MatchesModel.update as sinon.SinonStub).restore();
+  })
+  it('Finaliza a partida de id 1', async () => {
+    sinon.stub(MatchesModel, 'update').resolves([1]);
+    const result = await chai.request(app).patch('/matches/1').set({ authorization: VALIDTOKEN });
+    expect(result).to.have.status(200);
+  });
+  it('Edita a partida de id 1', async () => {
+    sinon.stub(MatchesModel, 'update').resolves([1]);
+    const result = await chai.request(app).patch('/matches/1').set({ authorization: VALIDTOKEN }).send({ params: { id: 1 }, body: { homeTeamGoals: 2, awayTeamGoals: 1 } });
+    expect(result).to.have.status(200);
+    expect(result.body).to.be.deep.equal({ message: 'Match edited' });
   });
 });
 
@@ -66,11 +95,6 @@ describe('Testa os erros no fluxo Matches', () => {
   it('Simula erro na requisição das partidas encerradas', async () => {
     sinon.stub(MatchesModel, 'findAll').throws();
     const result = await chai.request(app).get('/matches?inProgress=false');
-    expect(result.status).to.be.equal(500);
+    expect(result).to.have.status(500);
   });
-  // it('Não envia o token', async () => {
-  //   sinon.stub(matchService, 'newMatch').throws();
-  //   const result = await chai.request(app).post('newMatch', (req, res) => { req: { body: { email: 'admin@admin', password: 'secret_admin' } } } );
-  //   expect(result.status).to.be.equal(401);
-  // });
 });
