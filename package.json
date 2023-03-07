@@ -1,7 +1,7 @@
 {
-  "name": "trybe-futebol-club",
+  "name": "brasileiraofeminino2023",
   "version": "1.0.0",
-  "description": "Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.",
+  "description": "Sistema de administração do Campeonato Brasileiro de Futebol Feminino A1 2023",
   "main": "index.js",
   "scripts": {
     "postinstall": "npm run install:apps",
@@ -14,7 +14,7 @@
     "compose:down": "cd app && docker-compose down --remove-orphans",
     "logs": "cd app && docker-compose logs -f"
   },
-  "author": "Trybe",
+  "author": "devsakae",
   "devDependencies": {
     "@testing-library/jest-dom": "5.15.0",
     "@testing-library/react": "11.2.7",

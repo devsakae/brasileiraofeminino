@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   frontend:
+    container_name: brasileiraofeminino2023
     build: ./frontend
     ports:
       - 3000:3000
@@ -16,13 +17,12 @@ services:
       timeout: 10s
       retries: 5
   backend:
-    container_name: app_backend
+    container_name: brfem-backend
     build: ./backend
     ports:
       - 3001:3001
     platform: linux/x86_64
     working_dir: /app-backend
-    # Caso queira que o container esteja atualizado durante o desenvolvimento, sem que você precise ficar fazendo down e up dos containers, descomente as 3 linhas abaixo
     command: dev 
     volumes: 
       - ./backend/src:/app-backend/src
@@ -44,7 +44,7 @@ services:
       retries: 5
   db:
     image: mysql:8.0.21
-    container_name: db
+    container_name: brfem-db
     platform: linux/x86_64
     ports:
       - 3002:3306

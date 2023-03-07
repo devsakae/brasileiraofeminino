@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `TRYBE_FUTEBOL_CLUBE` ;
-USE `TRYBE_FUTEBOL_CLUBE`;
+CREATE DATABASE  IF NOT EXISTS `BRASILEIRAO_FEMININO` ;
+USE `BRASILEIRAO_FEMININO`;
 
 --
 -- Table structure for table `teams`
@@ -18,16 +18,22 @@ CREATE TABLE `teams` (
 --
 
 INSERT INTO `teams` VALUES
-  (1,'Avaí/Kindermann'),(2,'Bahia'),(3,'Botafogo'),
-  (4,'Corinthians'),(5,'Cruzeiro'),(6,'Ferroviária'),
-  (7,'Flamengo'),(8,'Grêmio'),(9,'Internacional'),
-  (10,'Minas Brasília'),(11,'Napoli-SC'),(12,'Palmeiras'),
-  (13,'Real Brasília'),(14,'Santos'),(15,'São José-SP'),
+  (1,'Avaí/Kindermann'),
+  (2,'Athletico-PR'),
+  (3,'Atlético-MG'),
+  (4,'Bahia'),
+  (5,'Ceará'),
+  (6,'Corinthians'),
+  (7,'Cruzeiro'),
+  (8,'Ferroviária'),
+  (9,'Flamengo'),
+  (10,'Grêmio'),
+  (11,'Internacional'),
+  (12,'Palmeiras'),
+  (13,'Real Ariquemes'),
+  (14,'Real Brasília'),
+  (15,'Santos'),
   (16,'São Paulo');
-
---
--- Table structure for table `matches`
---
 
 DROP TABLE IF EXISTS `matches`;
 
@@ -45,20 +51,9 @@ CREATE TABLE `matches` (
   CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`away_team_id`) REFERENCES `teams` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
---
--- Insert values for table `matches`
---
-
 INSERT INTO `matches` VALUES
-  (1,16,1,8,1,0),(2,9,1,14,1,0),(3,4,3,11,0,0),(4,3,0,2,0,0),(5,7,1,10,1,0),
-  (6,5,1,13,1,0),(7,12,2,6,2,0),(8,15,0,1,1,0),(9,1,0,12,3,0),(10,2,0,9,2,0),
-  (11,13,1,3,0,0),(12,6,0,4,1,0),(13,8,2,5,1,0),(14,14,2,16,1,0),(15,10,0,15,1,0),
-  (16,11,0,7,0,0),(17,1,2,8,3,0),(18,12,4,5,2,0),(19,11,2,2,2,0),(20,7,0,9,1,0),
-  (21,6,3,13,1,0),(22,4,3,3,1,0),(23,15,2,16,3,0),(24,10,2,14,2,0),(25,2,0,6,1,0),
-  (26,13,1,1,0,0),(27,5,1,15,2,0),(28,16,3,7,0,0),(29,9,0,4,4,0),(30,3,0,12,4,0),
-  (31,8,2,10,0,0),(32,14,5,11,1,0),(33,1,1,16,1,0),(34,9,3,6,1,0),(35,10,1,5,3,0),
-  (36,2,0,7,1,0),(37,15,0,13,1,0),(38,14,2,4,1,0),(39,3,2,11,0,0),(40,12,4,8,1,0);
+  (1,15,3,9,0,0),(2,6,14,5,0,0),(3,11,2,2,1,0),(4,16,1,4,1,0),(5,7,1,10,1,0),(6,12,9,13,0,0),(7,1,2,14,5,0),(8,3,2,8,4,0)
+  (9,5,0,16,2,0),(10,2,1,15,1,0),(11,4,2,7,3,0),(12,8,2,11,1,0),(13,13,0,6,6,0),(14,14,0,12,3,0),(15,9,3,1,0,0),(16,10,2,3,1,0);
 
 --
 -- Table structure for table `users`
@@ -83,6 +78,4 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` VALUES 
   (1,'Admin','admin','admin@admin.com','$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'),
-  (2,'User','user','user@user.com','$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO'),
-  (3,'User','user','@user.com','$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO'),
-  (4,'User','user','invalid.user@user.com','$2a$10$HDkFwOMKOI6PTza0F7.YRu1Bqsqb9hx7XkuV7QeYB5dRL4z9DI1Mu');
+  (2,'User','user','user@user.com','$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO');
