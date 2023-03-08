@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import LeaderboardTable from '../components/LeaderboardTable';
 import LoginBtn from '../components/LoginBtn';
@@ -11,6 +11,7 @@ const Leaderboard = () => {
   const [currentFilter, setCurrentFilter] = useState('Classificação Geral');
 
   useEffect(() => {
+    document.title = 'Brasileirão Feminino A1 2023';
     const token = localStorage.getItem('token');
     setLogin(!!token);
   }, [logged, setLogin]);
