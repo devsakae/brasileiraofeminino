@@ -32,9 +32,10 @@ Após isso, acesse a pasta do projeto:
   npm install
 ```
 
-3. Inicie o sistema
+3. Rode com Docker (docker-compose na pasta app/)
 ```bash
-npm run dev
+  cd app/ 
+  docker-compose up -d
 ```
 
 O projeto está preparado para rodar na portão 3000 (padrão) http://localhost:3000
